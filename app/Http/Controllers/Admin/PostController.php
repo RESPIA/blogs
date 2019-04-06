@@ -7,12 +7,14 @@ use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
     public function __construct()
 	{
-	    $this->middleware('auth:admin');
+        $this->middleware('auth:admin');
+        $this->middleware('can:posts');
 	}
     /**
      * Display a listing of the resource.
@@ -32,9 +34,14 @@ class PostController extends Controller
      */
     public function create()
     {
-        $tags = Tag::all();
-        $categories = Category::all();
-        return view('admin.posts.create', compact('tags', 'categories'));
+        if (Auth::user()->can('posts.create')) {
+            $tags = Tag::all();
+            $categories = Category::all();
+            return view('admin.posts.create', compact('tags', 'categories'));
+        }
+
+        //return redirect()->route('dashboard');
+        abort(404);
     }
 
     /**
@@ -90,10 +97,15 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::with('tags','categories')->where('id',$id)->first();
-        $tags = Tag::all();
-        $categories = Category::all();
-        return view('admin.posts.edit',compact('tags','categories','post'));
+        if (Auth::user()->can('posts.update')) {
+            $post = Post::with('tags','categories')->where('id',$id)->first();
+            $tags = Tag::all();
+            $categories = Category::all();
+            return view('admin.posts.edit',compact('tags','categories','post'));
+        }
+
+        //return redirect()->route('dashboard');
+        abort(404);
     }
 
     /**

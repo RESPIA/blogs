@@ -13,7 +13,7 @@
 
   <!-- Main Sidebar Container -->
   @include("admin.layouts.aside")
-  
+
   <!-- Content Wrapper. Contains page content -->
   @yield('main-content')
   <!-- /.content-wrapper -->

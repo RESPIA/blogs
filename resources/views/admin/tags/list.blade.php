@@ -27,6 +27,7 @@
                   <th>STT</th>
                   <th>Name</th>
                   <th>Created_at</th>
+                  <th>Updated_at</th>
                   <th>Action  </th>
                 </tr>
                 </thead>

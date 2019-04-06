@@ -13,9 +13,11 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">Data Table With Full Features</h3>
-              <div class="card-tools">
-                  <a href="{{ route("post.create") }}" class="btn btn-sm btn-primary">Create Post</a>
-              </div>
+              @can('posts.create', Auth::user())
+                <div class="card-tools">
+                    <a href="{{ route("post.create") }}" class="btn btn-sm btn-primary">Create Post</a>
+                </div>
+              @endcan
             </div>
 
             <!-- /.card-header -->
@@ -28,7 +30,16 @@
                   <th>Title</th>
                   <th>Created_at</th>
                   <th>Updated_at</th>
-                  <th>Action  </th>
+                  @can('posts.update', Auth::user())
+                    <th>Updated</th>
+                  @endcan
+
+                  @can('posts.delete', Auth::user())
+                    <th>Delete</th>
+                  @endcan
+
+
+
                 </tr>
                 </thead>
                 <tbody>
@@ -40,8 +51,15 @@
                   </td>
                   <td>{{ $post->created_at }}</td>
                   <td> {{ $post->updated_at }}</td>
+                  @can('posts.update', Auth::user())
                   <td>
-                    <a href="{{ route('post.edit',$post->id) }}"><i class="fa fa-edit"></i></a>
+                        <a href="{{ route('post.edit',$post->id) }}"><i class="fa fa-edit"></i></a>
+                  </td>
+                  @endcan
+
+                  @can('posts.delete', Auth::user())
+                  <td>
+
                     <form id="delete-form-{{ $post->id }}" method="post" action="{{ route('post.destroy',$post->id) }}" style="display: none">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
@@ -57,6 +75,7 @@
                           }" ><i class="fa fa-trash"></i>
                       </a>
                   </td>
+                  @endcan
                 </tr>
                 @endforeach
                 </tbody>
@@ -66,7 +85,15 @@
                   <th>Browser</th>
                   <th>Platform(s)</th>
                   <th>Engine version</th>
-                  <th>CSS grade</th>
+
+                  @can('posts.update', Auth::user())
+                    <th>Updated  </th>
+                  @endcan
+
+                  @can('posts.delete', Auth::user())
+                    <th>Delete  </th>
+                  @endcan
+
                 </tr>
                 </tfoot>
               </table>

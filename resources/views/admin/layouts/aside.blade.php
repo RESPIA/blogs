@@ -31,6 +31,7 @@
               </p>
             </a>
           </li>
+          @can('posts',Auth::user())
           <li class="nav-item has-treeview">
             <a href="{{ route("post.index") }}" class="nav-link">
               <i class="nav-icon fa fa-edit"></i>
@@ -39,6 +40,8 @@
               </p>
             </a>
           </li>
+          @endcan
+          @can('category',Auth::user())
           <li class="nav-item has-treeview">
             <a href="{{ route("category.index") }}" class="nav-link">
               <i class="nav-icon fa fa-folder"></i>
@@ -47,8 +50,8 @@
               </p>
             </a>
           </li>
-
-
+          @endcan
+          @can('tag',Auth::user())
           <li class="nav-item has-treeview">
             <a href="{{ route('tag.index') }}" class="nav-link">
               <i class="nav-icon fa fa-tags"></i>
@@ -57,6 +60,7 @@
               </p>
             </a>
           </li>
+          @endcan
           <li class="nav-item has-treeview">
               <a href="{{ route('permission.index') }}" class="nav-link">
                 <i class="nav-icon fa fa-user-plus"></i>
@@ -82,16 +86,16 @@
             </a>
           </li>
 
-        
+
           <li class="nav-item has-treeview">
             <a class="nav-link" href="{{ route('logout') }}"
                 onclick="event.preventDefault();
                               document.getElementById('logout-form').submit();">
-                
+
                 <i class="nav-icon  fa fa-sign-out"></i>
                 {{ __('Logout') }}
             </a>
-  
+
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
